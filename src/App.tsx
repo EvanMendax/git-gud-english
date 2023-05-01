@@ -1,26 +1,20 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import SideNavigation from "./Surface/SideNavigation";
+import ContentContainer from "./Surface/ContentContainer";
+import HeaderNavigation from "./Surface/HeaderNavigation";
+import Box from "@mui/material/Box";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <div>
+            <HeaderNavigation/>
+            <Box sx={{display: 'grid', gridTemplateColumns: '1fr 4fr', mt: '20px', mr: '6%', ml: '6%'}}>
+                <SideNavigation/>
+                <ContentContainer/>
+            </Box>
+
+        </div>
+    );
 }
 
 export default App;
