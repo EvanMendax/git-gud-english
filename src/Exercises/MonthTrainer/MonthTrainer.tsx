@@ -4,6 +4,7 @@ import {Checkbox, FormControlLabel, Paper, TextField} from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import {useState} from "react";
+import SideMenu from "./SideMenu";
 
 const questions = [
     {
@@ -89,27 +90,9 @@ const MonthTrainer = () => {
         return temporaryArray
     }
 
-
     return (
         <Box sx={{display: 'grid', gridTemplateColumns: '1fr 4fr'}}>
-            <Box>
-                <Paper sx={{
-                    bgcolor: '#dce1f8',
-                    borderRadius: 2,
-                    p: 2,
-                    mt: 2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center'
-                }}>
-                    <Typography sx={{fontSize: 25, mb:1}}>Step 1/12</Typography>
-                    <FormControlLabel sx={{mb: 1}} control={
-                        <Checkbox sx={{'& .MuiSvgIcon-root': {fontSize: 28}}}
-                                  onClick={handleIsRandom} checked={isRandom}/>
-                    } label="Random"/>
-                    <Button variant='contained' sx={{color: 'white', bgcolor: 'black', m: 1}}>Restart</Button>
-                </Paper>
-            </Box>
+            <SideMenu step={3} handleIsRandom={handleIsRandom} isRandom={isRandom}/>
             <Box sx={{display: 'flex', alignItems: 'center', flexDirection: 'column', p: 4}}>
                 <Typography sx={{fontSize: 30, fontWeight: 600, pb: 1}}>
                     {questions[0].question}
