@@ -1,118 +1,122 @@
 import * as React from 'react';
-import Typography from "@mui/material/Typography";
-import {Checkbox, FormControlLabel, Paper, TextField} from "@mui/material";
+import {useState} from 'react';
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import {useState} from "react";
 import SideMenu from "./SideMenu";
+import MouthExercise from "./MouthExercise";
+
+export type exercise = {
+    question: string
+    engAnswer: string[]
+    uaAnswer: string[]
+    engSeason: string[]
+}
 
 const questions = [
     {
         question: 'First month of year?',
-        engAnswer: ['january', 'January'],
-        uaAnswer: ['Січень', 'січень'],
-        engSeason: ['Winter', 'winter']
+        engAnswer: ['January'],
+        uaAnswer: ['Січень'],
+        engSeason: ['Winter']
     },
     {
         question: 'Second month of year?',
-        engAnswer: ['February', 'february'],
-        uaAnswer: ['лютий', 'Лютий'],
-        engSeason: ['Winter', 'winter']
+        engAnswer: ['February',],
+        uaAnswer: ['Лютий'],
+        engSeason: ['Winter',]
     }, {
         question: 'Third month of year?',
-        engAnswer: ['march', 'March'],
-        uaAnswer: ['Березень', 'березень'],
-        engSeason: ['spring', 'Spring']
+        engAnswer: ['March'],
+        uaAnswer: ['Березень'],
+        engSeason: ['Spring']
     },
     {
         question: 'Fourth month of year?',
-        engAnswer: ['april', 'April'],
-        uaAnswer: ['Квітень', 'квітень'],
-        engSeason: ['spring', 'Spring']
+        engAnswer: ['April'],
+        uaAnswer: ['Квітень'],
+        engSeason: ['Spring']
     }, {
         question: 'Fifth month of year?',
-        engAnswer: ['may', 'May'],
-        uaAnswer: ['Травень', 'травень'],
-        engSeason: ['spring', 'Spring']
+        engAnswer: ['May'],
+        uaAnswer: ['Травень'],
+        engSeason: ['Spring']
     },
     {
         question: 'Sixth month of year?',
-        engAnswer: ['june', 'June'],
-        uaAnswer: ['Червень', 'червень'],
-        engSeason: ['summer', 'Summer']
+        engAnswer: ['June'],
+        uaAnswer: ['Червень'],
+        engSeason: ['Summer']
     }, {
         question: 'Seventh month of year?',
-        engAnswer: ['july', 'July'],
-        uaAnswer: ['Липень', 'липень'],
-        engSeason: ['summer', 'Summer']
+        engAnswer: ['July'],
+        uaAnswer: ['Липень'],
+        engSeason: ['Summer']
     },
     {
         question: 'Eighth month of year?',
-        engAnswer: ['august', 'August'],
-        uaAnswer: ['Серпень', 'серпень'],
-        engSeason: ['summer', 'Summer']
+        engAnswer: ['August'],
+        uaAnswer: ['Серпень'],
+        engSeason: ['Summer']
     }, {
         question: 'Ninth month of year?',
-        engAnswer: ['september', 'September'],
-        uaAnswer: ['Вересень', 'вересень'],
-        engSeason: ['Autumn', 'Fall', 'autumn', 'fall']
+        engAnswer: ['September'],
+        uaAnswer: ['Вересень'],
+        engSeason: ['Autumn', 'Fall']
     },
     {
         question: 'Tenth month of year?',
-        engAnswer: ['october', 'October'],
-        uaAnswer: ['Жовтень', 'жовтень'],
-        engSeason: ['Autumn', 'Fall', 'autumn', 'fall']
+        engAnswer: ['October'],
+        uaAnswer: ['Жовтень'],
+        engSeason: ['Autumn', 'Fall']
     }, {
         question: 'Eleventh month of year?',
-        engAnswer: ['november', 'November'],
-        uaAnswer: ['листопад', 'Листопад'],
-        engSeason: ['Autumn', 'Fall', 'autumn', 'fall']
+        engAnswer: ['November'],
+        uaAnswer: ['Листопад'],
+        engSeason: ['Autumn', 'Fall']
     },
     {
         question: 'Twelfth month of year?',
-        engAnswer: ['december', 'December'],
-        uaAnswer: ['лютий', 'Лютий'],
-        engSeason: ['Winter', 'winter']
+        engAnswer: ['December'],
+        uaAnswer: ['Лютий'],
+        engSeason: ['Winter']
     },
 ]
+const shuffleQuestion = (array: any[]) => {
+    const temporaryArray = [...array]
+    for (let i = temporaryArray.length - 1; i > 0; i--) {
+        let j = Math.floor(Math.random() * (i + 1));
+        [temporaryArray[i], temporaryArray[j]] = [temporaryArray[j], temporaryArray[i]];
+    }
+    return temporaryArray
+}
 
 const MonthTrainer = () => {
 
-    const [isRandom, setIsRandom] = useState(false)
-    const handleIsRandom = () => setIsRandom(!isRandom)
+    const [isRandom, setIsRandom] = useState<boolean>(false)
+    const [currentStep, setCurrentStep] = useState<number>(1)
+    const [currentsQuestion, setCurrentsQuestion] = useState<exercise[]>(questions)
 
-    const shuffleQuestion = (array: any[]) => {
-        const temporaryArray = [...array]
-        for (let i = temporaryArray.length - 1; i > 0; i--) {
-            let j = Math.floor(Math.random() * (i + 1));
-            [temporaryArray[i], temporaryArray[j]] = [temporaryArray[j], temporaryArray[i]];
+    const restart = () => {
+        setCurrentStep(1)
+        if (isRandom) {
+            setCurrentsQuestion(shuffleQuestion(questions))
+        } else {
+            setCurrentsQuestion(questions)
         }
-        return temporaryArray
     }
-
+    const handleIsRandom = (isRandom: boolean) => {
+        setCurrentStep(1)
+        setIsRandom(isRandom)
+        if (isRandom) {
+            setCurrentsQuestion(shuffleQuestion(questions))
+        } else {
+            setCurrentsQuestion(questions)
+        }
+    }
     return (
         <Box sx={{display: 'grid', gridTemplateColumns: '1fr 4fr'}}>
-            <SideMenu step={3} handleIsRandom={handleIsRandom} isRandom={isRandom}/>
-            <Box sx={{display: 'flex', alignItems: 'center', flexDirection: 'column', p: 4}}>
-                <Typography sx={{fontSize: 30, fontWeight: 600, pb: 1}}>
-                    {questions[0].question}
-                </Typography>
-                <Box sx={{m: 1, height: 80}}>
-                    <TextField label='In English' variant='outlined' helperText={'1'}/>
-                </Box>
-                <Box sx={{m: 1, height: 80}}>
-                    <TextField label='In Ukrainian' variant='outlined' error helperText={'1'}/>
-                </Box>
-                <Box sx={{m: 1, height: 80}}>
-                    <TextField label='Season (eng)' variant='outlined' error helperText={'1'}/>
-                </Box>
-                <Box>
-                    <Button onClick={() => shuffleQuestion(questions)} variant='contained'
-                            sx={{color: 'white', bgcolor: 'black', m: 1}}>Check</Button>
-                    <Button variant='contained'
-                            sx={{color: 'white', bgcolor: 'black', m: 1}}>Next</Button>
-                </Box>
-            </Box>
+            <SideMenu restart={restart} step={currentStep} handleIsRandom={handleIsRandom} isRandom={isRandom}/>
+            <MouthExercise setCurrentStep={setCurrentStep} exercise={currentsQuestion[currentStep - 1]}
+                           step={currentStep}/>
         </Box>
     );
 };

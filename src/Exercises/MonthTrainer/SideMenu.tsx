@@ -6,11 +6,12 @@ import Box from "@mui/material/Box";
 
 interface props {
     step: number
-    handleIsRandom: () => void
+    handleIsRandom: (isRandom: boolean) => void
     isRandom: boolean
+    restart: () => void
 }
 
-const SideMenu:React.FC<props> = ({step, handleIsRandom, isRandom}) => {
+const SideMenu:React.FC<props> = ({step, handleIsRandom, isRandom, restart}) => {
     return (
         <Box>
             <Paper sx={{
@@ -25,9 +26,9 @@ const SideMenu:React.FC<props> = ({step, handleIsRandom, isRandom}) => {
                 <Typography sx={{fontSize: 25, mb:1}}>Step {step}/12</Typography>
                 <FormControlLabel sx={{mb: 1}} control={
                     <Checkbox sx={{'& .MuiSvgIcon-root': {fontSize: 28}}}
-                              onClick={handleIsRandom} checked={isRandom}/>
+                              onClick={() => handleIsRandom(!isRandom)} checked={isRandom}/>
                 } label="Random"/>
-                <Button variant='contained' sx={{color: 'white', bgcolor: 'black', m: 1}}>Restart</Button>
+                <Button onClick={restart} variant='contained' sx={{color: 'white', bgcolor: 'black', m: 1}}>Restart</Button>
             </Paper>
         </Box>
     );
