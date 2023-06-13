@@ -12,6 +12,9 @@ interface props {
 }
 
 const SideMenu:React.FC<props> = ({step, handleIsRandom, isRandom, restart}) => {
+
+    const currenStep = step > 12 ? 12 : step
+
     return (
         <Box>
             <Paper sx={{
@@ -23,7 +26,7 @@ const SideMenu:React.FC<props> = ({step, handleIsRandom, isRandom, restart}) => 
                 flexDirection: 'column',
                 alignItems: 'center'
             }}>
-                <Typography sx={{fontSize: 25, mb:1}}>Step {step}/12</Typography>
+                <Typography sx={{fontSize: 25, mb:1}}>Step {currenStep}/12</Typography>
                 <FormControlLabel sx={{mb: 1}} control={
                     <Checkbox sx={{'& .MuiSvgIcon-root': {fontSize: 28}}}
                               onClick={() => handleIsRandom(!isRandom)} checked={isRandom}/>

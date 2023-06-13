@@ -3,6 +3,7 @@ import {useState} from 'react';
 import Box from "@mui/material/Box";
 import SideMenu from "./SideMenu";
 import MouthExercise from "./MouthExercise";
+import CompleteExercise from "../../Common/CompleteExercise";
 
 export type exercise = {
     question: string
@@ -92,7 +93,7 @@ const shuffleQuestion = (array: any[]) => {
 const MonthTrainer = () => {
 
     const [isRandom, setIsRandom] = useState<boolean>(false)
-    const [currentStep, setCurrentStep] = useState<number>(1)
+    const [currentStep, setCurrentStep] = useState<number>(13)
     const [currentsQuestion, setCurrentsQuestion] = useState<exercise[]>(questions)
 
     const restart = () => {
@@ -115,8 +116,12 @@ const MonthTrainer = () => {
     return (
         <Box sx={{display: 'grid', gridTemplateColumns: '1fr 4fr'}}>
             <SideMenu restart={restart} step={currentStep} handleIsRandom={handleIsRandom} isRandom={isRandom}/>
-            <MouthExercise setCurrentStep={setCurrentStep} exercise={currentsQuestion[currentStep - 1]}
-                           step={currentStep}/>
+            {
+                currentStep < 13
+                    ? <MouthExercise setCurrentStep={setCurrentStep} exercise={currentsQuestion[currentStep - 1]}
+                                     step={currentStep}/>
+                    : <CompleteExercise setCurrentStep={setCurrentStep}/>
+            }
         </Box>
     );
 };
