@@ -4,11 +4,11 @@ import React from "react";
 
 export const routes = [
     {
-        path: "monthTrainer",
+        path: "/monthTrainer",
         element: <MonthTrainer/>,
     },
     {
-        path: "presentSimple",
+        path: "/presentSimple",
         element: <PresentSimple/>,
     },
 ]

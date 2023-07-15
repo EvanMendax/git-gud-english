@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {useState} from 'react';
 import Box from "@mui/material/Box";
-import SideMenu from "./SideMenu";
+import MonthSideMenu from "./MonthSideMenu";
 import MouthExercise from "./MouthExercise";
 import CompleteExercise from "../../Common/CompleteExercise";
 
@@ -93,7 +93,8 @@ const shuffleQuestion = (array: any[]) => {
 const MonthTrainer = () => {
 
     const [isRandom, setIsRandom] = useState<boolean>(false)
-    const [currentStep, setCurrentStep] = useState<number>(13)
+    const [isSeason, setIsSeason] = useState<boolean>(true)
+    const [currentStep, setCurrentStep] = useState<number>(1)
     const [currentsQuestion, setCurrentsQuestion] = useState<exercise[]>(questions)
 
     const restart = () => {
@@ -115,10 +116,12 @@ const MonthTrainer = () => {
     }
     return (
         <Box sx={{display: 'grid', gridTemplateColumns: '1fr 4fr'}}>
-            <SideMenu restart={restart} step={currentStep} handleIsRandom={handleIsRandom} isRandom={isRandom}/>
+            <MonthSideMenu isSeason={isSeason} setIsSeason={setIsSeason} restart={restart} step={currentStep}
+                           handleIsRandom={handleIsRandom} isRandom={isRandom}/>
             {
                 currentStep < 13
-                    ? <MouthExercise setCurrentStep={setCurrentStep} exercise={currentsQuestion[currentStep - 1]}
+                    ? <MouthExercise isSeason={isSeason} setCurrentStep={setCurrentStep}
+                                     exercise={currentsQuestion[currentStep - 1]}
                                      step={currentStep}/>
                     : <CompleteExercise setCurrentStep={setCurrentStep}/>
             }

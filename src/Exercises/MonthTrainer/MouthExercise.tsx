@@ -10,6 +10,7 @@ interface props {
     exercise: exercise
     step: number
     setCurrentStep: (step: number) => void
+    isSeason: boolean
 }
 
 type formAnswer = {
@@ -18,7 +19,7 @@ type formAnswer = {
     seasonAnswer: string
 }
 
-const MouthExercise: React.FC<props> = ({exercise, step, setCurrentStep}) => {
+const MouthExercise: React.FC<props> = ({exercise, step, setCurrentStep, isSeason}) => {
 
     const registerOptions = {required: {value: true, message: 'field is required'}}
 
@@ -28,9 +29,9 @@ const MouthExercise: React.FC<props> = ({exercise, step, setCurrentStep}) => {
     const nextStep = () => {
         setCurrentStep(step + 1)
         setIsCompleted(false)
-        setValue( 'engAnswer', '')
-        setValue( 'uaAnswer', '')
-        setValue( 'seasonAnswer', '')
+        setValue('engAnswer', '')
+        setValue('uaAnswer', '')
+        setValue('seasonAnswer', '')
     }
 
     const checkAnswer = (answers: string[], supposition: string): string | undefined => {
@@ -57,6 +58,9 @@ const MouthExercise: React.FC<props> = ({exercise, step, setCurrentStep}) => {
         if (answers.length === 3) {
             setIsCompleted(true)
         }
+        if (answers.length === 2 && !isSeason) {
+            setIsCompleted(true)
+        }
     })
 
     return (
@@ -75,11 +79,16 @@ const MouthExercise: React.FC<props> = ({exercise, step, setCurrentStep}) => {
                                label='In Ukrainian' variant='outlined' error={!!errors.uaAnswer}
                                helperText={errors.uaAnswer?.message || ''}/>
                 </Box>
-                <Box sx={{m: 1, height: 80}}>
-                    <TextField focused={isCompleted} color='success' {...register("seasonAnswer", registerOptions)}
-                               label='Season (eng)' variant='outlined' error={!!errors.seasonAnswer}
-                               helperText={errors.seasonAnswer?.message || ''}/>
-                </Box>
+                {
+                    isSeason
+                    ? <Box sx={{m: 1, height: 80}}>
+                        <TextField focused={isCompleted} color='success' {...register("seasonAnswer", registerOptions)}
+                                   label='Season (eng)' variant='outlined' error={!!errors.seasonAnswer}
+                                   helperText={errors.seasonAnswer?.message || ''}/>
+                    </Box>
+                    :null
+                }
+
                 <Box>
                     <Button variant='contained' type='submit'
                             sx={{color: 'white', bgcolor: 'black', m: 1}}>Check</Button>

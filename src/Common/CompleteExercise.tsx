@@ -4,7 +4,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import {routes} from "../routes";
-import {useLocation} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 
 interface props {
     setCurrentStep: (step: number) => void
@@ -13,14 +13,15 @@ interface props {
 const CompleteExercise:React.FC<props> = ({setCurrentStep}) => {
 
     const location = useLocation()
+    const navigate = useNavigate()
 
-    const changeExercise = ():string => {
+    const changeExercise = ():void => {
         const currentPath = location.pathname.slice(1)
         const randomExercise = Math.floor(Math.random() * (routes.length))
         if (currentPath === routes[randomExercise].path) {
             return changeExercise()
         }
-        return routes[randomExercise].path
+        navigate(routes[randomExercise].path)
     }
 
     return (
@@ -29,7 +30,7 @@ const CompleteExercise:React.FC<props> = ({setCurrentStep}) => {
             <Typography sx={{color: '#016522', fontSize: 20}}>Exercise completed, you are amazing!!!</Typography>
             <Typography sx={{color: '#016522', fontSize: 20}}>Try another exercise or restart this.</Typography>
             <Box sx={{pt: 3, mb: 3}}>
-                <Button color='success' variant='contained' onClick={()=>console.log(changeExercise())} sx={{mr: 2}}>
+                <Button color='success' variant='contained' onClick={changeExercise} sx={{mr: 2}}>
                     random exercise
                 </Button>
                 <Button color='success' variant='contained' onClick={() => setCurrentStep(1)}>
