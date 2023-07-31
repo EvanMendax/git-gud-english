@@ -5,6 +5,7 @@ import MonthSetting from "./MonthSetting";
 import MouthExercise from "./MouthExercise";
 import CompleteExercise from "../../Common/CompleteExercise";
 import SideMenu from "../../Common/SideMenu";
+import ExerciseWrapper from "../../Common/ExerciseWrapper";
 
 export type exercise = {
     question: string
@@ -116,7 +117,7 @@ const MonthTrainer = () => {
         }
     }
     return (
-        <Box sx={{display: 'grid', gridTemplateColumns: '1fr 4fr'}}>
+        <ExerciseWrapper>
             <SideMenu steps={12} currentStep={currentStep} restart={restart}>
                 <MonthSetting isSeason={isSeason} setIsSeason={setIsSeason} restart={restart} step={currentStep}
                               handleIsRandom={handleIsRandom} isRandom={isRandom}/>
@@ -128,7 +129,7 @@ const MonthTrainer = () => {
                                      step={currentStep}/>
                     : <CompleteExercise setCurrentStep={setCurrentStep}/>
             }
-        </Box>
+        </ExerciseWrapper>
     );
 };
 
