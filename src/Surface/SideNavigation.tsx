@@ -34,11 +34,10 @@ const SideNavigation = () => {
         setSelectedIndex(index)
         if (index === 2)
             setIsCommonOpen(true)
-        if (index === 0 && 1)
+        if (index === 0 || 1)
             setIsPresentSimpleOpen(true)
     }, [location])
 
-    console.log(selectedIndex)
 
     return (
         <Box sx={{display: 'flex', flexDirection: 'column'}}>
@@ -47,7 +46,7 @@ const SideNavigation = () => {
 
                     <ListItemButton onClick={() => setIsPresentSimpleOpen(!isPresentSimpleOpen)}>
                         <ListItemText primary="Present Simple"/>
-                        {isPresentSimpleOpen ? <ExpandLess/> : <ExpandMore/>}
+                        {selectedIndex ? <ExpandLess/> : <ExpandMore/>}
                     </ListItemButton>
                     <Collapse in={isPresentSimpleOpen} timeout="auto" unmountOnExit>
                         <List component="div" disablePadding>

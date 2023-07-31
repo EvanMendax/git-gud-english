@@ -1,15 +1,16 @@
-import PresentSimple from "./Exercises/PresentSimple/PresentSimple";
+import PSVerbEnding from "./Exercises/PSVerbEnding/PSVerbEnding";
 import MonthTrainer from "./Exercises/MonthTrainer/MonthTrainer";
 import React from "react";
+import PsSentences from "./Exercises/PSSentences/PSSentences";
 
 export const routes = [
     {
         path: "/presentSimpleVerb",
-        element: <PresentSimple/>,
+        element: <PSVerbEnding/>,
     },
     {
         path: "/presentSimpleSentences",
-        element: <PresentSimple/>,
+        element: <PsSentences/>,
     },
     {
         path: "/monthTrainer",

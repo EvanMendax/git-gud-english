@@ -1,9 +1,10 @@
 import * as React from 'react';
 import {useState} from 'react';
 import Box from "@mui/material/Box";
-import MonthSideMenu from "./MonthSideMenu";
+import MonthSetting from "./MonthSetting";
 import MouthExercise from "./MouthExercise";
 import CompleteExercise from "../../Common/CompleteExercise";
+import SideMenu from "../../Common/SideMenu";
 
 export type exercise = {
     question: string
@@ -116,8 +117,10 @@ const MonthTrainer = () => {
     }
     return (
         <Box sx={{display: 'grid', gridTemplateColumns: '1fr 4fr'}}>
-            <MonthSideMenu isSeason={isSeason} setIsSeason={setIsSeason} restart={restart} step={currentStep}
-                           handleIsRandom={handleIsRandom} isRandom={isRandom}/>
+            <SideMenu steps={12} currentStep={currentStep} restart={restart}>
+                <MonthSetting isSeason={isSeason} setIsSeason={setIsSeason} restart={restart} step={currentStep}
+                              handleIsRandom={handleIsRandom} isRandom={isRandom}/>
+            </SideMenu>
             {
                 currentStep < 13
                     ? <MouthExercise isSeason={isSeason} setCurrentStep={setCurrentStep}
