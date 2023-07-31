@@ -4,11 +4,16 @@ import React from "react";
 
 export const routes = [
     {
+        path: "/presentSimpleVerb",
+        element: <PresentSimple/>,
+    },
+    {
+        path: "/presentSimpleSentences",
+        element: <PresentSimple/>,
+    },
+    {
         path: "/monthTrainer",
         element: <MonthTrainer/>,
     },
-    {
-        path: "/presentSimple",
-        element: <PresentSimple/>,
-    },
+
 ]
