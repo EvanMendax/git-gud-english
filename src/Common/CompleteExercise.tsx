@@ -18,7 +18,9 @@ const CompleteExercise:React.FC<props> = ({setCurrentStep}) => {
     const changeExercise = ():void => {
         const currentPath = location.pathname.slice(1)
         const randomExercise = Math.floor(Math.random() * (routes.length))
-        if (currentPath === routes[randomExercise].path) {
+        console.log(routes[randomExercise].path)
+        console.log(currentPath)
+        if ('/' + currentPath === routes[randomExercise].path) {
             return changeExercise()
         }
         navigate(routes[randomExercise].path)
