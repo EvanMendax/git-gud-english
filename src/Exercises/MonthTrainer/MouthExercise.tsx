@@ -40,7 +40,6 @@ const MouthExercise: React.FC<props> = ({exercise, step, setCurrentStep, isSeaso
 
     const showRightAnswer = (fieldName: fieldNames, rightAnswer: string, fieldIndex: number) => {
         setValue(fieldName, rightAnswer)
-        debugger
         setCompletedQuestion(prevState => {
             return prevState.map((value, index) => {
                 if (index === fieldIndex) return true
@@ -80,7 +79,6 @@ const MouthExercise: React.FC<props> = ({exercise, step, setCurrentStep, isSeaso
         }
     })
 
-    console.log(completedQuestion)
     return (
         <Box sx={{display: 'flex', alignItems: 'center', flexDirection: 'column', p: 4}}>
             <Typography sx={{fontSize: 30, fontWeight: 600, pb: 1}}>
@@ -97,7 +95,7 @@ const MouthExercise: React.FC<props> = ({exercise, step, setCurrentStep, isSeaso
                     }/>
                 </Box>
                 <Box sx={{m: 1, height: 80, display: 'flex'}}>
-                    <TextField focused={completedQuestion[1]} color='success'
+                    <TextField autoComplete={'off'} focused={completedQuestion[1]} color='success'
                                {...register("uaAnswer", registerOptions)}
                                label='In Ukrainian' variant='outlined' error={!!errors.uaAnswer}
                                helperText={errors.uaAnswer?.message || ''}
@@ -106,10 +104,9 @@ const MouthExercise: React.FC<props> = ({exercise, step, setCurrentStep, isSeaso
                         () => showRightAnswer('uaAnswer', exercise.uaAnswer[0], 1)
                     }/>
                 </Box>
-                {
-                    isSeason
+                {isSeason
                         ? <Box sx={{m: 1, height: 80, display: 'flex'}}>
-                            <TextField focused={completedQuestion[2]}
+                            <TextField autoComplete={'off'} focused={completedQuestion[2]}
                                        color='success' {...register("seasonAnswer", registerOptions)}
                                        label='Season (eng)' variant='outlined' error={!!errors.seasonAnswer}
                                        helperText={errors.seasonAnswer?.message || ''}/>
@@ -117,9 +114,7 @@ const MouthExercise: React.FC<props> = ({exercise, step, setCurrentStep, isSeaso
                                 'seasonAnswer', exercise.engSeason[0], 2
                             )}/>
                         </Box>
-                        : null
-                }
-
+                        : null}
                 <Box>
                     <Button variant='contained' type='submit'
                             sx={{color: 'white', bgcolor: 'black', m: 1}}>Check</Button>
