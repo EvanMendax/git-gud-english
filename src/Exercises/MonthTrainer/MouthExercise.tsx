@@ -70,7 +70,7 @@ const MouthExercise: React.FC<props> = ({exercise, step, setCurrentStep, isSeaso
                 type: "wrongAnswer", message: 'Right answer: ' + exercise.engSeason[0]
             });
         } else answers.push(1)
-        if (answers.length === 3 || (2 && !isSeason)) {
+        if (answers.length === 3 || (answers.length === 2 && !isSeason)) {
             setCompletedQuestion([true, true, true])
             setIsCompleted(true)
         }
@@ -111,5 +111,4 @@ const MouthExercise: React.FC<props> = ({exercise, step, setCurrentStep, isSeaso
         </ExerciseForm>
     );
 };
-
 export default MouthExercise;
