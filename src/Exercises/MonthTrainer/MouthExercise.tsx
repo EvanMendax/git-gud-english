@@ -1,11 +1,10 @@
 import React, {useState} from 'react';
-import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import {TextField} from "@mui/material";
-import Button from "@mui/material/Button";
 import {exercise} from "./MonthTrainer";
 import {useForm} from "react-hook-form";
 import {HelpButton} from "../../Common/HelpButton";
+import ExerciseForm from "../../Common/ExerciseForm";
 
 interface props {
     exercise: exercise
@@ -36,8 +35,6 @@ const MouthExercise: React.FC<props> = ({exercise, step, setCurrentStep, isSeaso
     const [completedQuestion, setCompletedQuestion] = useState(
         [false, false, false]
     )
-
-
     const showRightAnswer = (fieldName: fieldNames, rightAnswer: string, fieldIndex: number) => {
         setValue(fieldName, rightAnswer)
         setCompletedQuestion(prevState => {
@@ -80,49 +77,38 @@ const MouthExercise: React.FC<props> = ({exercise, step, setCurrentStep, isSeaso
     })
 
     return (
-        <Box sx={{display: 'flex', alignItems: 'center', flexDirection: 'column', p: 4}}>
-            <Typography sx={{fontSize: 30, fontWeight: 600, pb: 1}}>
-                {exercise.question}
-            </Typography>
-            <form onSubmit={onSubmit}>
-                <Box sx={{m: 1, height: 80, display: 'flex'}}>
-                    <TextField autoComplete={'off'} focused={completedQuestion[0]}
-                               color='success' {...register("engAnswer", registerOptions)}
-                               label='In English' variant='outlined' error={!!errors.engAnswer}
-                               helperText={errors.engAnswer?.message || ''}/>
-                    <HelpButton showRightAnswer={
-                        () => showRightAnswer('engAnswer', exercise.engAnswer[0], 0)
-                    }/>
+        <ExerciseForm question={exercise.question} onSubmit={onSubmit} nextStep={nextStep} isCompleted={isCompleted}>
+            <Box sx={{m: 1, height: 80, display: 'flex'}}>
+                <TextField autoComplete={'off'} focused={completedQuestion[0]}
+                           color='success' {...register("engAnswer", registerOptions)}
+                           label='In English' variant='outlined' error={!!errors.engAnswer}
+                           helperText={errors.engAnswer?.message || ''}/>
+                <HelpButton showRightAnswer={
+                    () => showRightAnswer('engAnswer', exercise.engAnswer[0], 0)
+                }/>
+            </Box>
+            <Box sx={{m: 1, height: 80, display: 'flex'}}>
+                <TextField autoComplete={'off'} focused={completedQuestion[1]} color='success'
+                           {...register("uaAnswer", registerOptions)}
+                           label='In Ukrainian' variant='outlined' error={!!errors.uaAnswer}
+                           helperText={errors.uaAnswer?.message || ''}
+                />
+                <HelpButton showRightAnswer={
+                    () => showRightAnswer('uaAnswer', exercise.uaAnswer[0], 1)
+                }/>
+            </Box>
+            {isSeason
+                ? <Box sx={{m: 1, height: 80, display: 'flex'}}>
+                    <TextField autoComplete={'off'} focused={completedQuestion[2]}
+                               color='success' {...register("seasonAnswer", registerOptions)}
+                               label='Season (eng)' variant='outlined' error={!!errors.seasonAnswer}
+                               helperText={errors.seasonAnswer?.message || ''}/>
+                    <HelpButton showRightAnswer={() => showRightAnswer(
+                        'seasonAnswer', exercise.engSeason[0], 2
+                    )}/>
                 </Box>
-                <Box sx={{m: 1, height: 80, display: 'flex'}}>
-                    <TextField autoComplete={'off'} focused={completedQuestion[1]} color='success'
-                               {...register("uaAnswer", registerOptions)}
-                               label='In Ukrainian' variant='outlined' error={!!errors.uaAnswer}
-                               helperText={errors.uaAnswer?.message || ''}
-                    />
-                    <HelpButton showRightAnswer={
-                        () => showRightAnswer('uaAnswer', exercise.uaAnswer[0], 1)
-                    }/>
-                </Box>
-                {isSeason
-                        ? <Box sx={{m: 1, height: 80, display: 'flex'}}>
-                            <TextField autoComplete={'off'} focused={completedQuestion[2]}
-                                       color='success' {...register("seasonAnswer", registerOptions)}
-                                       label='Season (eng)' variant='outlined' error={!!errors.seasonAnswer}
-                                       helperText={errors.seasonAnswer?.message || ''}/>
-                            <HelpButton showRightAnswer={() => showRightAnswer(
-                                'seasonAnswer', exercise.engSeason[0], 2
-                            )}/>
-                        </Box>
-                        : null}
-                <Box>
-                    <Button variant='contained' type='submit'
-                            sx={{color: 'white', bgcolor: 'black', m: 1}}>Check</Button>
-                    <Button variant='contained' disabled={!isCompleted} onClick={nextStep}
-                            sx={{color: 'white', bgcolor: '#225d22', m: 1}}>Next</Button>
-                </Box>
-            </form>
-        </Box>
+                : null}
+        </ExerciseForm>
     );
 };
 
