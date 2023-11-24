@@ -33,15 +33,25 @@ const MouthExercise: React.FC<props> = ({exercise, step, setCurrentStep, isSeaso
         formState: {errors}
     } = useForm<formAnswer>();
     const [isCompleted, setIsCompleted] = useState(false)
+    const [completedQuestion, setCompletedQuestion] = useState(
+        [false, false, false]
+    )
 
 
-    const showRightAnswer = (fieldName: fieldNames, rightAnswer: string) => {
+    const showRightAnswer = (fieldName: fieldNames, rightAnswer: string, fieldIndex: number) => {
         setValue(fieldName, rightAnswer)
-        setIsCompleted(true)
+        debugger
+        setCompletedQuestion(prevState => {
+            return prevState.map((value, index) => {
+                if (index === fieldIndex) return true
+                return value
+            });
+        })
     }
     const nextStep = () => {
         setCurrentStep(step + 1)
         setIsCompleted(false)
+        setCompletedQuestion([false, false, false])
         setValue('engAnswer', '')
         setValue('uaAnswer', '')
         setValue('seasonAnswer', '')
@@ -65,40 +75,47 @@ const MouthExercise: React.FC<props> = ({exercise, step, setCurrentStep, isSeaso
             });
         } else answers.push(1)
         if (answers.length === 3 || (2 && !isSeason)) {
+            setCompletedQuestion([true, true, true])
             setIsCompleted(true)
         }
     })
 
+    console.log(completedQuestion)
     return (
         <Box sx={{display: 'flex', alignItems: 'center', flexDirection: 'column', p: 4}}>
             <Typography sx={{fontSize: 30, fontWeight: 600, pb: 1}}>
                 {exercise.question}
             </Typography>
             <form onSubmit={onSubmit}>
-                <Box sx={{m: 1, height: 80}}>
-                    <TextField autoComplete={'off'} focused={isCompleted}
+                <Box sx={{m: 1, height: 80, display: 'flex'}}>
+                    <TextField autoComplete={'off'} focused={completedQuestion[0]}
                                color='success' {...register("engAnswer", registerOptions)}
                                label='In English' variant='outlined' error={!!errors.engAnswer}
                                helperText={errors.engAnswer?.message || ''}/>
-                    <HelpButton showRightAnswer={showRightAnswer} rightAnswer={exercise.engAnswer[0]}
-                                fieldName={'engAnswer'}/>
+                    <HelpButton showRightAnswer={
+                        () => showRightAnswer('engAnswer', exercise.engAnswer[0], 0)
+                    }/>
                 </Box>
                 <Box sx={{m: 1, height: 80, display: 'flex'}}>
-                    <TextField focused={isCompleted} color='success' {...register("uaAnswer", registerOptions)}
+                    <TextField focused={completedQuestion[1]} color='success'
+                               {...register("uaAnswer", registerOptions)}
                                label='In Ukrainian' variant='outlined' error={!!errors.uaAnswer}
                                helperText={errors.uaAnswer?.message || ''}
                     />
-                    <HelpButton showRightAnswer={showRightAnswer} rightAnswer={exercise.uaAnswer[0]}
-                                fieldName={'uaAnswer'}/>
+                    <HelpButton showRightAnswer={
+                        () => showRightAnswer('uaAnswer', exercise.uaAnswer[0], 1)
+                    }/>
                 </Box>
                 {
                     isSeason
-                        ? <Box sx={{m: 1, height: 80}}>
-                            <TextField focused={isCompleted} color='success' {...register("seasonAnswer", registerOptions)}
+                        ? <Box sx={{m: 1, height: 80, display: 'flex'}}>
+                            <TextField focused={completedQuestion[2]}
+                                       color='success' {...register("seasonAnswer", registerOptions)}
                                        label='Season (eng)' variant='outlined' error={!!errors.seasonAnswer}
                                        helperText={errors.seasonAnswer?.message || ''}/>
-                            <HelpButton showRightAnswer={showRightAnswer} rightAnswer={exercise.engSeason[0]}
-                                        fieldName={'seasonAnswer'}/>
+                            <HelpButton showRightAnswer={() => showRightAnswer(
+                                'seasonAnswer', exercise.engSeason[0], 2
+                            )}/>
                         </Box>
                         : null
                 }
