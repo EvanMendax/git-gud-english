@@ -1,17 +1,17 @@
 import React, {ReactElement} from 'react';
-import {Checkbox, FormControlLabel, Paper} from "@mui/material";
+import {Paper} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 
 interface props {
-    children: ReactElement
+    children?: ReactElement
     steps: number
     currentStep: number
     restart: () => void
 }
 
-const SideMenu:React.FC<props> = ({children, steps, restart, currentStep}) => {
+const SideMenu: React.FC<props> = ({steps, restart, currentStep, children}) => {
 
     const currentStepValue = currentStep > steps ? steps : currentStep
 

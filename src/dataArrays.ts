@@ -29,7 +29,6 @@ export const verbs = [
     'crash',
     'clash',
     'unbox',
-    'admix',
     'flux',
     'go',
     'redo',

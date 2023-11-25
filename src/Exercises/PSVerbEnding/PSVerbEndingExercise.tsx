@@ -19,6 +19,7 @@ const PsVerbEndingExercise: React.FC<props> = ({step, groupedQuestions, nextStep
     )
     const [rightAnswers, setRightAnswers] = useState(0)
     const {
+        reset,
         register,
         handleSubmit,
         setError,
@@ -77,9 +78,10 @@ const PsVerbEndingExercise: React.FC<props> = ({step, groupedQuestions, nextStep
     }
 
     const handleNextStep = () => {
-        for (let i = 0; i < 6; i++) {
-            setValue(`question${i}`, '')
-        }
+        setCompletedQuestion(prevState => prevState.fill(false))
+        nextStep()
+        reset()
+        setRightAnswers(0)
     }
 
     return (
