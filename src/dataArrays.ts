@@ -33,5 +33,13 @@ export const verbs = [
     'flux',
     'go',
     'redo',
+    'work',
+    'show',
+    'cook',
+    'sneeze',
+    'live',
+    'stop',
+    'die',
+    'take ',
     'tango'
 ]

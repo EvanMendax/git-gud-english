@@ -13,7 +13,7 @@ interface props {
     groupedQuestions: any[][]
 }
 
-const PsVerbEndingExercise:React.FC<props> = ({step, groupedQuestions}) => {
+const PsVerbEndingExercise: React.FC<props> = ({step, groupedQuestions}) => {
 
     const registerOptions = {required: {value: true, message: 'field is required'}}
     const [completedQuestion, setCompletedQuestion] = useState(
@@ -42,7 +42,29 @@ const PsVerbEndingExercise:React.FC<props> = ({step, groupedQuestions}) => {
     })
 
     const checkAnswer = (answer: string) => {
-
+        switch (answer.slice(-1)) {
+            case 'z':
+            case 's':
+            case 'x':
+                return answer + 'es'
+            case 'y':
+                const consonantLetters = ['a', 'e', 'i', 'o', 'u', 'y']
+                if (consonantLetters.find(letter => letter === answer.slice(-2, -1))) {
+                    return answer+ 's'
+                } else {
+                    return answer.slice(0, -1)+ 'ies'
+                }
+            default:
+                break
+        }
+        switch (answer.slice(-2)) {
+            case 'ch':
+            case 'sh':
+                return answer + 'es'
+            default:
+                break
+        }
+        return answer + 's'
     }
 
 
@@ -52,7 +74,7 @@ const PsVerbEndingExercise:React.FC<props> = ({step, groupedQuestions}) => {
                           question={'Write word with right ending for He/She/It in Present Simple'}
             >
                 {
-                    groupedQuestions[step-1]?.map((verb, index) =>
+                    groupedQuestions[step - 1]?.map((verb, index) =>
                         <Box sx={{m: 1, height: 80, display: 'flex'}}>
                             <TextField autoComplete={'off'} focused={completedQuestion[index]} color='success'
                                        {...register(verb, registerOptions)}
