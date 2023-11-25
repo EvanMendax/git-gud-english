@@ -1,15 +1,25 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import SideMenu from "../../Common/SideMenu";
 import PsVerbEndingSetting from "./PSVerbEndingSetting";
 import Box from "@mui/material/Box";
 import ExerciseWrapper from "../../Common/ExerciseWrapper";
 import CompleteExercise from "../../Common/CompleteExercise";
 import PsVerbEndingExercise from "./PSVerbEndingExercise";
+import {groupQuestion, shuffleQuestion} from "../../Common/commonFunctions";
+import {verbs} from "../../dataArrays";
 
 const PSVerbEnding = () => {
 
     const [currentStep, setCurrentStep] = useState<number>(1)
-    const restart = () => setCurrentStep(1)
+    const [groupedQuestions, setGroupedQuestions] = useState<any[][]>([])
+    const restart = () => {
+        setCurrentStep(1)
+        setGroupedQuestions(groupQuestion(shuffleQuestion(verbs), 5))
+    }
+
+    useEffect(() => {
+        setGroupedQuestions(groupQuestion(shuffleQuestion(verbs), 5))
+    }, []);
 
     return (
         <ExerciseWrapper>
@@ -18,7 +28,7 @@ const PSVerbEnding = () => {
             </SideMenu>
             {
                 currentStep < 10
-                    ?  <PsVerbEndingExercise/>
+                    ?  <PsVerbEndingExercise step={currentStep} groupedQuestions={groupedQuestions}/>
                     : <CompleteExercise setCurrentStep={setCurrentStep}/>
             }
         </ExerciseWrapper>

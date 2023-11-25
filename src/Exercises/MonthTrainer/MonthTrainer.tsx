@@ -6,6 +6,7 @@ import MouthExercise from "./MouthExercise";
 import CompleteExercise from "../../Common/CompleteExercise";
 import SideMenu from "../../Common/SideMenu";
 import ExerciseWrapper from "../../Common/ExerciseWrapper";
+import {shuffleQuestion} from "../../Common/commonFunctions";
 
 export type exercise = {
     question: string
@@ -83,15 +84,6 @@ const questions = [
         engSeason: ['Winter']
     },
 ]
-const shuffleQuestion = (array: any[]) => {
-    const temporaryArray = [...array]
-    for (let i = temporaryArray.length - 1; i > 0; i--) {
-        let j = Math.floor(Math.random() * (i + 1));
-        [temporaryArray[i], temporaryArray[j]] = [temporaryArray[j], temporaryArray[i]];
-    }
-    return temporaryArray
-}
-
 const MonthTrainer = () => {
 
     const [isRandom, setIsRandom] = useState<boolean>(false)
