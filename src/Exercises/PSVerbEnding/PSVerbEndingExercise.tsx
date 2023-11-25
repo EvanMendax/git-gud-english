@@ -1,12 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import ExerciseForm from "../../Common/ExerciseForm";
-import {TextField} from "@mui/material";
+import {Paper, TextField} from "@mui/material";
 import {HelpButton} from "../../Common/HelpButton";
 import Box from "@mui/material/Box";
-import {verbs} from "../../dataArrays";
 import {fieldNames} from "../MonthTrainer/MouthExercise";
 import {useForm} from "react-hook-form";
-import {shuffleQuestion} from "../../Common/commonFunctions";
 
 interface props {
     step: number
@@ -50,9 +48,9 @@ const PsVerbEndingExercise: React.FC<props> = ({step, groupedQuestions}) => {
             case 'y':
                 const consonantLetters = ['a', 'e', 'i', 'o', 'u', 'y']
                 if (consonantLetters.find(letter => letter === answer.slice(-2, -1))) {
-                    return answer+ 's'
+                    return answer + 's'
                 } else {
-                    return answer.slice(0, -1)+ 'ies'
+                    return answer.slice(0, -1) + 'ies'
                 }
             default:
                 break
@@ -73,20 +71,22 @@ const PsVerbEndingExercise: React.FC<props> = ({step, groupedQuestions}) => {
             <ExerciseForm isCompleted={false} nextStep={() => console.log('')} onSubmit={onSubmit}
                           question={'Write word with right ending for He/She/It in Present Simple'}
             >
-                {
-                    groupedQuestions[step - 1]?.map((verb, index) =>
-                        <Box sx={{m: 1, height: 80, display: 'flex'}}>
-                            <TextField autoComplete={'off'} focused={completedQuestion[index]} color='success'
-                                       {...register(verb, registerOptions)}
-                                       label={verb} variant='outlined' error={!!errors.uaAnswer}
-                                // @ts-ignore
-                                       helperText={errors[verb]?.message || ''}
-                            />
-                            <HelpButton showRightAnswer={
-                                () => showRightAnswer('uaAnswer', 'результат роботи майбутньої функції', 1)
-                            }/>
-                        </Box>)
-                }
+                <Box sx={{display: 'grid', gridTemplateColumns: '1fr 1fr'}}>
+                    {
+                        groupedQuestions[step - 1]?.map((verb, index) =>
+                            <Box key={verb} sx={{m: 1, height: 80, display: 'flex'}}>
+                                <TextField autoComplete={'off'} focused={completedQuestion[index]} color='success'
+                                           {...register(verb, registerOptions)}
+                                           label={verb} variant='outlined' error={!!errors.uaAnswer}
+                                    // @ts-ignore
+                                           helperText={errors[verb]?.message || ''}
+                                />
+                                <HelpButton showRightAnswer={
+                                    () => showRightAnswer('uaAnswer', 'результат роботи майбутньої функції', 1)
+                                }/>
+                            </Box>)
+                    }
+                </Box>
             </ExerciseForm>
         </div>
     );

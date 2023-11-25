@@ -1,7 +1,7 @@
 import React from 'react';
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
+import {Paper} from "@mui/material";
 
 interface props {
     onSubmit: () => void
@@ -11,15 +11,25 @@ interface props {
     nextStep: () => void
 }
 
-const ExerciseForm: React.FC<props> = ({onSubmit, children, question, isCompleted, nextStep}) => {
+const questionStyle = {
+    fontSize: 27,
+    textAlign: 'center',
+    fontWeight: 600,
+    p: 1, pl: 3, pr: 3, m: 2,
+    bgcolor: 'rgba(193,176,225,0.13)'
+}
+
+const ExerciseForm: React.FC<props> = (
+    {onSubmit, children, question, isCompleted, nextStep}
+) => {
     return (
-        <Box sx={{display: 'flex', alignItems: 'center', flexDirection: 'column', p: 4}}>
-            <Typography sx={{fontSize: 30, fontWeight: 600, pb: 1}}>
+        <Box sx={{display: 'flex', alignItems: 'center', flexDirection: 'column', p: 4, pt: 2}}>
+            <Paper sx={questionStyle}>
                 {question}
-            </Typography>
+            </Paper>
             <form onSubmit={onSubmit}>
                 {children}
-                <Box>
+                <Box sx={{textAlign: 'center'}}>
                     <Button variant='contained' type={!isCompleted ? 'submit' : 'button'}
                             sx={{color: 'white', bgcolor: 'black', m: 1}}>Check</Button>
                     <Button variant='contained' type={isCompleted ? 'submit' : 'button'} disabled={!isCompleted}

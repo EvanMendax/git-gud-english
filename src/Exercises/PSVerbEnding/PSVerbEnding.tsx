@@ -14,11 +14,11 @@ const PSVerbEnding = () => {
     const [groupedQuestions, setGroupedQuestions] = useState<any[][]>([])
     const restart = () => {
         setCurrentStep(1)
-        setGroupedQuestions(groupQuestion(shuffleQuestion(verbs), 5))
+        setGroupedQuestions(groupQuestion(shuffleQuestion(verbs), 6))
     }
 
     useEffect(() => {
-        setGroupedQuestions(groupQuestion(shuffleQuestion(verbs), 5))
+        setGroupedQuestions(groupQuestion(shuffleQuestion(verbs), 6 ))
     }, []);
 
     return (
