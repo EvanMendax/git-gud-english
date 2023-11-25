@@ -17,6 +17,10 @@ const PSVerbEnding = () => {
         setGroupedQuestions(groupQuestion(shuffleQuestion(verbs), 6))
     }
 
+    const nextStep = () => {
+      setCurrentStep(currentStep+1)
+    }
+
     useEffect(() => {
         setGroupedQuestions(groupQuestion(shuffleQuestion(verbs), 6 ))
     }, []);
@@ -28,7 +32,7 @@ const PSVerbEnding = () => {
             </SideMenu>
             {
                 currentStep < 10
-                    ?  <PsVerbEndingExercise step={currentStep} groupedQuestions={groupedQuestions}/>
+                    ?  <PsVerbEndingExercise step={currentStep} groupedQuestions={groupedQuestions} nextStep={nextStep}/>
                     : <CompleteExercise setCurrentStep={setCurrentStep}/>
             }
         </ExerciseWrapper>
