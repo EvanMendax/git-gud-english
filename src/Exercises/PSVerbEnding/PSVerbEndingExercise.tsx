@@ -28,15 +28,6 @@ const PsVerbEndingExercise: React.FC<props> = ({step, groupedQuestions, nextStep
     } = useForm()
 
 
-    const showRightAnswer = (fieldName: string, rightAnswer: string, fieldIndex: number) => {
-        setValue(fieldName, rightAnswer, {shouldValidate: true})
-        setCompletedQuestion(prevState => {
-            return prevState.map((value, index) => {
-                if (index === fieldIndex) return true
-                return value
-            });
-        })
-    }
 
     const onSubmit = handleSubmit((data) => {
         setRightAnswers(0)
@@ -99,9 +90,9 @@ const PsVerbEndingExercise: React.FC<props> = ({step, groupedQuestions, nextStep
                                     // @ts-ignore
                                            helperText={errors[`question${index}`]?.message || ''}
                                 />
-                                <HelpButton showRightAnswer={
-                                    () => showRightAnswer(`question${index}`, checkAnswer(verb), index)
-                                }/>
+                                <HelpButton setValue={setValue} setCompletedQuestion={setCompletedQuestion}
+                                            fieldIndex={index} fieldName={`question${index}`}
+                                            rightAnswer={checkAnswer(verb)}/>
                             </Box>)
                     }
                 </Box>

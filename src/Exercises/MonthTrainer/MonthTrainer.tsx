@@ -1,6 +1,5 @@
 import * as React from 'react';
 import {useState} from 'react';
-import Box from "@mui/material/Box";
 import MonthSetting from "./MonthSetting";
 import MouthExercise from "./MouthExercise";
 import CompleteExercise from "../../Common/CompleteExercise";

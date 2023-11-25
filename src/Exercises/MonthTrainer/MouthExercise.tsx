@@ -13,46 +13,33 @@ interface props {
     isSeason: boolean
 }
 
-type formAnswer = {
+type fieldName = {
     engAnswer: string
     uaAnswer: string
     seasonAnswer: string
 }
 
-export type fieldNames = "engAnswer" | "uaAnswer" | "seasonAnswer"
-
 const MouthExercise: React.FC<props> = ({exercise, step, setCurrentStep, isSeason}) => {
 
     const registerOptions = {required: {value: true, message: 'field is required'}}
     const {
+        reset,
         register,
         handleSubmit,
         setError,
         setValue,
         formState: {errors}
-    } = useForm<formAnswer>();
+    } = useForm<fieldName>();
     const [isCompleted, setIsCompleted] = useState(false)
     const [completedQuestion, setCompletedQuestion] = useState(
         [false, false, false]
     )
-    const showRightAnswer = (fieldName: fieldNames, rightAnswer: string, fieldIndex: number) => {
-        setValue(fieldName, rightAnswer)
-        setCompletedQuestion(prevState => {
-            return prevState.map((value, index) => {
-                if (index === fieldIndex) return true
-                return value
-            });
-        })
-    }
     const nextStep = () => {
         setCurrentStep(step + 1)
         setIsCompleted(false)
         setCompletedQuestion([false, false, false])
-        setValue('engAnswer', '')
-        setValue('uaAnswer', '')
-        setValue('seasonAnswer', '')
+        reset()
     }
-
     const checkAnswer = (answers: string[], supposition: string): string | undefined => {
         return answers.find(answer => answer.toLowerCase() === supposition.toLowerCase())
     }
@@ -83,9 +70,8 @@ const MouthExercise: React.FC<props> = ({exercise, step, setCurrentStep, isSeaso
                            color='success' {...register("engAnswer", registerOptions)}
                            label='In English' variant='outlined' error={!!errors.engAnswer}
                            helperText={errors.engAnswer?.message || ''}/>
-                <HelpButton showRightAnswer={
-                    () => showRightAnswer('engAnswer', exercise.engAnswer[0], 0)
-                }/>
+                <HelpButton rightAnswer={exercise.engAnswer[0]} fieldName={'engAnswer'} fieldIndex={0}
+                            setCompletedQuestion={setCompletedQuestion} setValue={setValue}/>
             </Box>
             <Box sx={{m: 1, height: 80, display: 'flex'}}>
                 <TextField autoComplete={'off'} focused={completedQuestion[1]} color='success'
@@ -93,9 +79,8 @@ const MouthExercise: React.FC<props> = ({exercise, step, setCurrentStep, isSeaso
                            label='In Ukrainian' variant='outlined' error={!!errors.uaAnswer}
                            helperText={errors.uaAnswer?.message || ''}
                 />
-                <HelpButton showRightAnswer={
-                    () => showRightAnswer('uaAnswer', exercise.uaAnswer[0], 1)
-                }/>
+                <HelpButton rightAnswer={exercise.uaAnswer[0]} fieldName={'uaAnswer'} fieldIndex={1}
+                            setCompletedQuestion={setCompletedQuestion} setValue={setValue}/>
             </Box>
             {isSeason
                 ? <Box sx={{m: 1, height: 80, display: 'flex'}}>
@@ -103,9 +88,8 @@ const MouthExercise: React.FC<props> = ({exercise, step, setCurrentStep, isSeaso
                                color='success' {...register("seasonAnswer", registerOptions)}
                                label='Season (eng)' variant='outlined' error={!!errors.seasonAnswer}
                                helperText={errors.seasonAnswer?.message || ''}/>
-                    <HelpButton showRightAnswer={() => showRightAnswer(
-                        'seasonAnswer', exercise.engSeason[0], 2
-                    )}/>
+                    <HelpButton rightAnswer={exercise.engSeason[0]} fieldName={'seasonAnswer'} fieldIndex={2}
+                                setCompletedQuestion={setCompletedQuestion} setValue={setValue}/>
                 </Box>
                 : null}
         </ExerciseForm>
