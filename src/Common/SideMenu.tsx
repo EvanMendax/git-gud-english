@@ -9,9 +9,17 @@ interface props {
     steps: number
     currentStep: number
     restart: () => void
+    openHint?: () => void
 }
 
-const SideMenu: React.FC<props> = ({steps, restart, currentStep, children}) => {
+const SideMenu: React.FC<props> = (
+    {
+        steps,
+        restart,
+        currentStep,
+        children,
+        openHint
+    }) => {
 
     const currentStepValue = currentStep > steps ? steps : currentStep
 
@@ -28,6 +36,7 @@ const SideMenu: React.FC<props> = ({steps, restart, currentStep, children}) => {
             }}>
                 <Typography sx={{fontSize: 25, mb: 1}}>Step {currentStepValue}/{steps}</Typography>
                 {children}
+                {openHint ? <Button sx={{m: 1}} variant={'contained'} onClick={openHint}>Show hint</Button> : null}
                 <Button onClick={restart} variant='contained'
                         sx={{color: 'white', bgcolor: 'black', m: 1}}>Restart</Button>
             </Paper>

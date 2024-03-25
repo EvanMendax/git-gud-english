@@ -39,6 +39,6 @@ export const verbs = [
     'live',
     'stop',
     'die',
-    'take ',
+    'take',
     'tango'
 ]

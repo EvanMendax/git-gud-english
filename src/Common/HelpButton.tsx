@@ -14,7 +14,13 @@ interface props {
 }
 
 export const HelpButton: React.FC<props> = (
-    {setValue, setCompletedQuestion, fieldIndex, fieldName, rightAnswer}
+    {
+        setValue,
+        setCompletedQuestion,
+        fieldIndex,
+        fieldName,
+        rightAnswer
+    }
 ) => {
 
     const showRightAnswer = (fieldName: string, rightAnswer: string, fieldIndex: number) => {
